@@ -139,7 +139,6 @@ class ImgurAlbumDownloader:
         if not os.path.exists(albumFolder):
             os.makedirs(albumFolder)
 
-
         # And finally loop through and save the images:
         for (counter, image) in enumerate(self.imageIDs, start=1):
             image_url = "http://i.imgur.com/"+image[0]+image[1]
