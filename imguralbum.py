@@ -130,9 +130,11 @@ class ImgurAlbumDownloader:
         """
         # Try and create the album folder:
         if foldername:
-            albumFolder = foldername
+            valid_folder_name = foldername.replace("?", "")
+            albumFolder = valid_folder_name
         else:
-            albumFolder = self.album_key
+            folder_album_key = self.album_key.replace("?", "")
+            albumFolder = folder_album_key
 
         if not os.path.exists(albumFolder):
             os.makedirs(albumFolder)
