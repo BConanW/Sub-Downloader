@@ -67,7 +67,7 @@ class RedditC(object):
                         imagesavelocation = self.sub + "/" + imagename
                         # log.info("Attempting to download to %s" % imagesavelocation)
                         # log.info(os.path.abspath(imagesavelocation))
-                        fullfilename = os.path.join("", imagesavelocation)
+                        fullfilename = os.path.join(self.slocation, imagesavelocation)
                         if not os.path.exists(fullfilename):
                             # log.info(fullfilename)
                             urllib.request.urlretrieve(self.url2, fullfilename)
