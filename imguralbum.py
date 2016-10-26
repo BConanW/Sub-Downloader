@@ -133,9 +133,7 @@ class ImgurAlbumDownloader:
             valid_folder_name = foldername.replace("?", "")
             albumFolder = valid_folder_name
         else:
-            print(self.album_key)
             folder_album_key = self.album_key.replace("?", "")
-            print(folder_album_key)
             albumFolder = folder_album_key
 
         if not os.path.exists(albumFolder):
