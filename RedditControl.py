@@ -11,10 +11,11 @@ log = logger.StdoutLogger()
 
 class RedditC(object):
 
-    def __init__(self, sub):
+    def __init__(self, sub, slocation):
         self.subr = sub
+        self.slocation = slocation
         log.info("sub is: %s" % self.subr)
-        self.sub = os.path.join("", self.subr)
+        self.sub = os.path.join(self.slocation, self.subr)
         if not os.path.exists(self.sub):
             log.info("Making new directory for sub %s" % self.subr)
             os.mkdir(self.sub)
@@ -103,7 +104,7 @@ class RedditC(object):
                     # log.info('URL has been retrieved')
                     imagesavelocation = imagesavelocation.rpartition("?")[0] + '.jpg'
                     # log.info('Image will be saved with name: %s' % imagesavelocation)
-                    fullfilename = os.path.join("", imagesavelocation)
+                    fullfilename = os.path.join(self.slocation, imagesavelocation)
                     self.f = open(fullfilename, 'wb')
                     # log.info('local image name created')
                     self.f.write(self.response.content)
@@ -116,7 +117,7 @@ class RedditC(object):
             elif 'redd' in self.url:
                 # log.info('URL is i.redd.it: %s' % self.url)
                 imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
-                fullfilename = os.path.join("", imagesavelocation)
+                fullfilename = os.path.join(self.slocation, imagesavelocation)
                 # log.info('Attempting to save to: %s' % imagesavelocation)
                 try:
                     self.response = requests.get(self.url)
@@ -142,7 +143,7 @@ class RedditC(object):
                         imagesavelocation = self.sub + "/" + imagename
                         # log.info("Attempting to download to %s" % imagesavelocation)
                         # log.info(os.path.abspath(imagesavelocation))
-                        fullfilename = os.path.join("", imagesavelocation)
+                        fullfilename = os.path.join(self.slocation, imagesavelocation)
                         if not os.path.exists(fullfilename):
                             # log.info(fullfilename)
                             urllib.request.urlretrieve(self.url, fullfilename)

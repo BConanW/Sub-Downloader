@@ -130,12 +130,17 @@ class ImgurAlbumDownloader:
         """
         # Try and create the album folder:
         if foldername:
-            albumFolder = foldername
+            valid_folder_name = foldername.replace("?", "")
+            albumFolder = valid_folder_name
         else:
-            albumFolder = self.album_key
+            print(self.album_key)
+            folder_album_key = self.album_key.replace("?", "")
+            print(folder_album_key)
+            albumFolder = folder_album_key
 
         if not os.path.exists(albumFolder):
             os.makedirs(albumFolder)
+
 
         # And finally loop through and save the images:
         for (counter, image) in enumerate(self.imageIDs, start=1):
