@@ -85,3 +85,29 @@ class RedditDownloader:
 
         else:
             log.info("URL is not Reddit: %s" % self.reddit_url)
+
+
+class GenericDownloader:
+
+    def __init__(self, image_url, save_location):
+
+        self.image_url = image_url
+        self.save_location = save_location
+
+        log.info("Attempting to Dowload: %s" % self.image_url)
+        if any(x in self.image_url for x in [".png", ".jpg", ".jpeg", "gif", "gifv"]):
+            try:
+                # log.info("Attempting to download %s using urllib" % self.image_url)
+                imagename = self.image_url.rpartition("/")[2]
+                log.info("attempting to save with name: %s" % imagename)
+                imagesavelocation = self.save_location + "/" + imagename
+                # log.info("Attempting to download to %s" % imagesavelocation)
+                if not os.path.exists(imagesavelocation):
+                    # log.info(imagesavelocation)
+                    urllib.request.urlretrieve(self.image_url, imagesavelocation)
+                    log.info("Download complete")
+                else:
+                    log.info("Skipping. File already exists")
+            except:
+                log.info("Unable to download %s" % self.image_url)
+                pass

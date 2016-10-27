@@ -60,26 +60,7 @@ class RedditC(object):
                 ImageDownload.RedditDownloader(self.url, self.sub)
 
             else:
-                log.info("Attempting to Dowload: %s" % self.url)
-                if any(x in self.url for x in [".png", ".jpg", ".jpeg", "gif", "gifv"]):
-                    try:
-                        # log.info("Attempting to download %s using urllib" % self.url)
-                        imagenamesplit = self.url.rpartition("/")
-                        imagename = imagenamesplit[2]
-                        # log.info("attempting to save with name: %s" % imagename)
-                        imagesavelocation = self.sub + "/" + imagename
-                        # log.info("Attempting to download to %s" % imagesavelocation)
-                        # log.info(os.path.abspath(imagesavelocation))
-                        fullfilename = os.path.join(self.slocation, imagesavelocation)
-                        if not os.path.exists(fullfilename):
-                            # log.info(fullfilename)
-                            urllib.request.urlretrieve(self.url, fullfilename)
-                            log.info("Download complete")
-                        else:
-                        	log.info("Skipping. File already exists")
-                    except:
-                        log.info("Unable to download %s" % self.url)
-                        pass
+                ImageDownload.GenericDownloader(self.url, self.sub)
                 
 
 
