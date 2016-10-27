@@ -50,7 +50,7 @@ class ImgurDownloader:
 
 
 
-ImgurDownloader("http://imgur.com/a/uAFvn", 'c:\\saved\\')
+# ImgurDownloader("http://imgur.com/a/uAFvn", 'c:\\saved\\')
 
 
 
