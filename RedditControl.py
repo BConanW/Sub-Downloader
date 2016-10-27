@@ -2,6 +2,7 @@ __author__ = 'BCWright'
 
 import praw
 import ImgurDownload
+import RedditDownload
 import urllib.request
 import os
 import logger
@@ -95,43 +96,46 @@ class RedditC(object):
                 #
                 #     except imguralbum.ImgurAlbumException:
                 #         log.info("Failed to download: %s" % self.url2)
-				
-            elif 'reddituploads' in self.url:
-                log.info('URL is reddituploads: %s' % self.url)
-                imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
-                # log.info('Attempting to save to: %s' % imagesavelocation)
-                try:
-                    self.response = requests.get(self.url)
-                    # log.info('URL has been retrieved')
-                    imagesavelocation = imagesavelocation.rpartition("?")[0] + '.jpg'
-                    # log.info('Image will be saved with name: %s' % imagesavelocation)
-                    fullfilename = os.path.join(self.slocation, imagesavelocation)
-                    self.f = open(fullfilename, 'wb')
-                    # log.info('local image name created')
-                    self.f.write(self.response.content)
-                    log.info('Download Complete')
-                    self.f.close()
-                    # log.info('connection closed')
-                except:
-                    log.info('Unable to save: %s' % self.url)	
-							
-            elif 'redd' in self.url:
-                # log.info('URL is i.redd.it: %s' % self.url)
-                imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
-                fullfilename = os.path.join(self.slocation, imagesavelocation)
-                # log.info('Attempting to save to: %s' % imagesavelocation)
-                try:
-                    self.response = requests.get(self.url)
-                    # log.info('URL has been retrieved')
-                    self.f = open(fullfilename, 'wb')
-                    # log.info('local image name created')
-                    self.f.write(self.response.content)
-                    log.info('Download Complete')
-                    self.f.close()
-                    # log.info('connection closed')
-                except:
-                    # log.info('Unable to save: %s' % self.url)
-                    pass
+            elif "redd" in self.url:
+                RedditDownload.RedditDownloader(self.url, self.sub)
+
+
+            # elif 'reddituploads' in self.url:
+            #     log.info('URL is reddituploads: %s' % self.url)
+            #     imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
+            #     # log.info('Attempting to save to: %s' % imagesavelocation)
+            #     try:
+            #         self.response = requests.get(self.url)
+            #         # log.info('URL has been retrieved')
+            #         imagesavelocation = imagesavelocation.rpartition("?")[0] + '.jpg'
+            #         # log.info('Image will be saved with name: %s' % imagesavelocation)
+            #         fullfilename = os.path.join(self.slocation, imagesavelocation)
+            #         self.f = open(fullfilename, 'wb')
+            #         # log.info('local image name created')
+            #         self.f.write(self.response.content)
+            #         log.info('Download Complete')
+            #         self.f.close()
+            #         # log.info('connection closed')
+            #     except:
+            #         log.info('Unable to save: %s' % self.url)
+				#
+            # elif 'redd' in self.url:
+            #     # log.info('URL is i.redd.it: %s' % self.url)
+            #     imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
+            #     fullfilename = os.path.join(self.slocation, imagesavelocation)
+            #     # log.info('Attempting to save to: %s' % imagesavelocation)
+            #     try:
+            #         self.response = requests.get(self.url)
+            #         # log.info('URL has been retrieved')
+            #         self.f = open(fullfilename, 'wb')
+            #         # log.info('local image name created')
+            #         self.f.write(self.response.content)
+            #         log.info('Download Complete')
+            #         self.f.close()
+            #         # log.info('connection closed')
+            #     except:
+            #         # log.info('Unable to save: %s' % self.url)
+            #         pass
 
             else:
                 log.info("Attempting to Dowload: %s" % self.url)
