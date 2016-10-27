@@ -1,8 +1,7 @@
 __author__ = 'BCWright'
 
 import praw
-import ImgurDownload
-import RedditDownload
+import ImageDownload
 import urllib.request
 import os
 import logger
@@ -55,10 +54,10 @@ class RedditC(object):
             self.url = self.submission.url
 
             if "imgur" in self.url:
-                ImgurDownload.ImgurDownloader(self.url, self.sub)
+                ImageDownload.ImgurDownloader(self.url, self.sub)
 
             elif "redd" in self.url:
-                RedditDownload.RedditDownloader(self.url, self.sub)
+                ImageDownload.RedditDownloader(self.url, self.sub)
 
             else:
                 log.info("Attempting to Dowload: %s" % self.url)
