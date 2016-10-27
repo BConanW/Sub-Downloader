@@ -34,6 +34,7 @@ class ImgurDownloader:
                     albumdownloader = imguralbum.ImgurAlbumDownloader(self.imgur_url)
                     albumfoldername = self.imgur_url.rpartition("/")[2]
                     albumlocation = os.path.join(self.save_location, albumfoldername)
+                    log.info("%s images in album" % albumdownloader.num_images())
                     albumdownloader.save_images(albumlocation)
                     log.info("Album '%s' download complete" % albumfoldername)
 
