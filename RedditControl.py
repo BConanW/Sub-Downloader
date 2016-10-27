@@ -56,86 +56,9 @@ class RedditC(object):
 
             if "imgur" in self.url:
                 ImgurDownload.ImgurDownloader(self.url, self.sub)
-                # log.info(self.url)
-                # self.url2 = self.url.replace("i.", "")
-                # log.info("attempting to download: '%s'" % self.url2)
-                #
-                # if any(x in self.url2 for x in [".png", ".jpg", ".jpeg", "gif", "gifv"]):
-                #     try:
-                #         # log.info("Attempting to download %s using urllib" % self.url2)
-                #         imagenamesplit = self.url2.rpartition("/")
-                #         imagename = imagenamesplit[2]
-                #         # log.info("attempting to save with name: %s" % imagename)
-                #         imagesavelocation = self.sub + "/" + imagename
-                #         # log.info("Attempting to download to %s" % imagesavelocation)
-                #         # log.info(os.path.abspath(imagesavelocation))
-                #         fullfilename = os.path.join(self.slocation, imagesavelocation)
-                #         if not os.path.exists(fullfilename):
-                #             # log.info(fullfilename)
-                #             urllib.request.urlretrieve(self.url2, fullfilename)
-                #             log.info("Image Download Complete")
-                #         else:
-                #         	log.info("Skipping. File already exists")
-                #     except:
-                #         log.info("Unable to download %s" % self.url2)
-                #         pass
-                #
-                # else:
-                #     try:
-                #         self.downloader = imguralbum.ImgurAlbumDownloader(self.url2)
-                #         # log.info("This albums has %d images" % self.downloader.num_images())
-                #         # Trial code below. Delete if script fails
-                #         foldernamesplit = self.url2.rpartition("/")
-                #         albumfoldername = foldernamesplit[2]
-                #         # log.info('Naming folder: %s' % albumfoldername)
-                #         self.albumlocation = os.path.join(self.sub, albumfoldername)
-                #         self.downloader.save_images(self.albumlocation)
-                #         # end of trial code. Uncommment line below if this fails
-                #         # self.downloader.save_images(self.sub)
-                #         log.info("Album Download Complete")
-                #
-                #     except imguralbum.ImgurAlbumException:
-                #         log.info("Failed to download: %s" % self.url2)
+
             elif "redd" in self.url:
                 RedditDownload.RedditDownloader(self.url, self.sub)
-
-
-            # elif 'reddituploads' in self.url:
-            #     log.info('URL is reddituploads: %s' % self.url)
-            #     imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
-            #     # log.info('Attempting to save to: %s' % imagesavelocation)
-            #     try:
-            #         self.response = requests.get(self.url)
-            #         # log.info('URL has been retrieved')
-            #         imagesavelocation = imagesavelocation.rpartition("?")[0] + '.jpg'
-            #         # log.info('Image will be saved with name: %s' % imagesavelocation)
-            #         fullfilename = os.path.join(self.slocation, imagesavelocation)
-            #         self.f = open(fullfilename, 'wb')
-            #         # log.info('local image name created')
-            #         self.f.write(self.response.content)
-            #         log.info('Download Complete')
-            #         self.f.close()
-            #         # log.info('connection closed')
-            #     except:
-            #         log.info('Unable to save: %s' % self.url)
-				#
-            # elif 'redd' in self.url:
-            #     # log.info('URL is i.redd.it: %s' % self.url)
-            #     imagesavelocation = self.sub + "/" + self.url.rpartition("/")[2]
-            #     fullfilename = os.path.join(self.slocation, imagesavelocation)
-            #     # log.info('Attempting to save to: %s' % imagesavelocation)
-            #     try:
-            #         self.response = requests.get(self.url)
-            #         # log.info('URL has been retrieved')
-            #         self.f = open(fullfilename, 'wb')
-            #         # log.info('local image name created')
-            #         self.f.write(self.response.content)
-            #         log.info('Download Complete')
-            #         self.f.close()
-            #         # log.info('connection closed')
-            #     except:
-            #         # log.info('Unable to save: %s' % self.url)
-            #         pass
 
             else:
                 log.info("Attempting to Dowload: %s" % self.url)
