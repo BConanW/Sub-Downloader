@@ -27,7 +27,7 @@ class ImgurDownloader:
                         urllib.request.urlretrieve(self.imgur_url, imagesavelocation)
                         log.info("Image '%s' successfully saved" % imagename)
                     else:
-                        ImgurException("Image '%s' already exists" % imagename)
+                        log.info("Image '%s' already exists" % imagename)
                 except:
                     log.info("Unable to download from URL: %s" % self.imgur_url)
 
@@ -41,11 +41,11 @@ class ImgurDownloader:
                     log.info("Album '%s' download complete" % albumfoldername)
 
                 except:
-                    ImgurException("Failed to download album from URL: %s" % self.imgur_url)
+                    log.info("Failed to download album from URL: %s" % self.imgur_url)
 
 
         else:
-            raise ImgurException("URL is not Imgur")
+            log.error("URL is not Imgur")
 
 
 
