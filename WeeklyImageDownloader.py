@@ -13,19 +13,7 @@ slocation = 'c:\\saved\\'
 for item in sublist:
     ben = RedditControl.RedditC(item, slocation)
     ben.download("day")
-    
-for item in sublist:
-    ben = RedditControl.RedditC(item, slocation)
     ben.download("week")
-
-for item in sublist:
-    ben = RedditControl.RedditC(item, slocation)
     ben.download("month")
-    
-for item in sublist:
-    ben = RedditControl.RedditC(item, slocation)
     ben.download("year")
-
-for item in sublist:
-     ben = RedditControl.RedditC(item, slocation)
-     ben.download("all")
+    ben.download("all")
