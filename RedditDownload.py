@@ -13,25 +13,31 @@ class RedditDownloader:
 
         if "redd" in self.reddit_url:
             log.info("URL is Reddit")
-            imagesavelocation = self.save_location + "/" + self.reddit_url.rpartition("/")[2]
+            imagename = self.reddit_url.rpartition("/")[2]
 
             if "reddituploads" in reddit_url:
                 log.info("Image hosted on reddituploads, name requires formatting")
-                imagesavelocation = imagesavelocation.rpartition("?")[0] + ".jpg"
+                imagename = imagename.rpartition("?")[0] + ".jpg"
                 log.info("Formatting Complete")
             else:
                 pass
 
+            imagesavelocation = self.save_location + "/" + imagename
+
             try:
-                log.info("Attempting to download: %s" % self.reddit_url)
-                self.response = requests.get(self.reddit_url)
-                log.info('Image will be saved with name: %s' % imagesavelocation)
-                self.f = open(imagesavelocation, 'wb')
-                log.info('local image name created')
-                self.f.write(self.response.content)
-                log.info('Download Complete')
-                self.f.close()
-                # log.info('connection closed')
+                if os.path.isfile(imagesavelocation) is True:
+                    log.info("Image %s already exists" % imagename)
+                else:
+                    log.info("Attempting to download: %s" % self.reddit_url)
+                    self.response = requests.get(self.reddit_url)
+
+                    log.info('Image will be saved with name: %s' % imagesavelocation)
+                    self.f = open(imagesavelocation, 'wb')
+                    log.info('local image name created')
+                    self.f.write(self.response.content)
+                    log.info('Download Complete')
+                    self.f.close()
+                    # log.info('connection closed')
             except:
                 log.info('Unable to save: %s' % self.reddit_url)
 
