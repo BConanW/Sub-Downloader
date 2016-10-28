@@ -14,14 +14,10 @@ class RedditC(object):
     def __init__(self, sub, slocation):
         self.subr = sub
         self.slocation = slocation
+
         log.info("sub is: %s" % self.subr)
-        self.sub = os.path.join(self.slocation, self.subr)
-        if not os.path.exists(self.sub):
-            log.info("Making new directory for sub %s" % self.subr)
-            os.mkdir(self.sub)
         self.r = praw.Reddit(user_agent="bens_an_agent")
         # log.info(self.r)
-        self.subreddit = self.r.get_subreddit(self.subr)
 
     def login(self, username, password):
         self.r.login(username, password)
@@ -35,6 +31,12 @@ class RedditC(object):
     #         log.info(self.url)
 
     def download(self, topof):
+
+        self.sub = os.path.join(self.slocation, self.subr)
+        if not os.path.exists(self.sub):
+            log.info("Making new directory for sub %s" % self.subr)
+            os.mkdir(self.sub)
+
         self.topof = topof
         log.info("Downloading top of the %s" % self.topof)
         if self.topof is "day":
@@ -62,6 +64,11 @@ class RedditC(object):
             else:
                 ImageDownload.GenericDownloader(self.url, self.sub)
                 
-
-
+    def sub_exists(self):
+        try:
+            self.subreddit = self.r.get_subreddit(self.subr, fetch=True)
+            return True
+        except:
+            # log.info("Subreddit does not exist")
+            return False
 
