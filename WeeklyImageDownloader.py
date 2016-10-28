@@ -1,8 +1,11 @@
 __author__ = 'BCWright'
 
 import RedditControl
+import logger
 
-sublist = ["pics"]
+log = logger.StdoutLogger()
+
+sublist = ["pics", "nvehnewghnwjolb", "aww"]
 # with open('') as f:
 #     sublist = f.read().splitlines()
 
@@ -12,8 +15,12 @@ slocation = 'c:\\saved\\'
 
 for item in sublist:
     ben = RedditControl.RedditC(item, slocation)
-    ben.download("day")
-    ben.download("week")
-    ben.download("month")
-    ben.download("year")
-    ben.download("all")
+    if ben.sub_exists() is True:
+        ben.download("day")
+        ben.download("week")
+        ben.download("month")
+        ben.download("year")
+        ben.download("all")
+    else:
+        log.info("Subreddit '%s' does not exist" % item)
+        pass
