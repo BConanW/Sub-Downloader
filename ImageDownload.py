@@ -4,6 +4,8 @@ import urllib.request
 import requests
 import imguralbum
 import logger
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 
 log = logger.StdoutLogger()
 
@@ -110,8 +112,14 @@ class GfycatDownloader:
         self.image_url = image_url
         self.save_location = save_location
 
-        directlink = image_url[:8] + "zippy." + image_url[8:] + ".webm"
-        log.info(directlink)
+        html = urlopen(self.image_url)
+        soup = BeautifulSoup(html, 'html.parser')
+        
+        for link in soup.find_all(type="video/webm"):
+            log.info("getting link")
+            directlink = link.get("src")
+            log.info("Direct Link: %s" % directlink)
+
         try:
             # log.info("Attempting to download %s using urllib" % self.image_url)
             imagename = directlink.rpartition("/")[2]
