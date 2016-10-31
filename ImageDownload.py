@@ -1,10 +1,25 @@
 import os
+import re
 import urllib.request
 import requests
 import imguralbum
 import logger
 
 log = logger.StdoutLogger()
+
+
+class ImageDownload:
+
+    def __init__(self, image_url, save_location):
+        if "imgur" in image_url:
+            ImgurDownloader(image_url, save_location)
+        elif "redd" in image_url:
+            RedditDownloader(image_url, save_location)
+        elif "gfycat" in image_url:
+            GfycatDownloader(image_url, save_location)
+        else:
+            GenericDownloader(image_url, save_location)
+
 
 class ImgurDownloader:
 
@@ -86,6 +101,32 @@ class RedditDownloader:
 
         else:
             log.info("URL is not Reddit: %s" % self.reddit_url)
+
+
+class GfycatDownloader:
+
+    def __init__(self, image_url, save_location):
+
+        self.image_url = image_url
+        self.save_location = save_location
+
+        directlink = image_url[:8] + "zippy." + image_url[8:] + ".webm"
+        log.info(directlink)
+        try:
+            # log.info("Attempting to download %s using urllib" % self.image_url)
+            imagename = directlink.rpartition("/")[2]
+            log.info("attempting to save with name: %s" % imagename)
+            imagesavelocation = self.save_location + "/" + imagename
+            # log.info("Attempting to download to %s" % imagesavelocation)
+            if not os.path.exists(imagesavelocation):
+                # log.info(imagesavelocation)
+                urllib.request.urlretrieve(directlink, imagesavelocation)
+                log.info("Download complete")
+            else:
+                log.info("Skipping. File already exists")
+        except:
+            log.info("Unable to download %s" % self.image_url)
+            pass
 
 
 class GenericDownloader:

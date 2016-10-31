@@ -9,7 +9,7 @@ sublist = ["pics", "nvehnewghnwjolb", "aww"]
 # with open('') as f:
 #     sublist = f.read().splitlines()
 
-slocation = 'c:\\saved\\'
+slocation = '/Users/BCWright/Documents/Projects/SVN/Test'
 # with open('savelocation.txt') as f:
 #     slocation = f.read()
 

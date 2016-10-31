@@ -54,15 +54,7 @@ class RedditC(object):
 
         for self.submission in self.toplist:
             self.url = self.submission.url
-
-            if "imgur" in self.url:
-                ImageDownload.ImgurDownloader(self.url, self.sub)
-
-            elif "redd" in self.url:
-                ImageDownload.RedditDownloader(self.url, self.sub)
-
-            else:
-                ImageDownload.GenericDownloader(self.url, self.sub)
+            ImageDownload.ImageDownload(self.url, self.sub)
                 
     def sub_exists(self):
         try:
