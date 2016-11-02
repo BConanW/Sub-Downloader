@@ -170,7 +170,10 @@ class ImgurAlbumDownloader:
                 int(math.ceil(math.log(len(self.imageIDs) + 1, 10))),
                 counter
             )
-            path = os.path.join(albumFolder, prefix + image[0] + image[1])
+            if prefix == "1-":
+                path = os.path.join(albumFolder, image[0] + image[1])
+            else:
+                path = os.path.join(albumFolder, prefix + image[0] + image[1])
 
             # Run the callbacks:
             for fn in self.image_callbacks:
