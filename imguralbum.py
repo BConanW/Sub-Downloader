@@ -21,6 +21,9 @@ import math
 from collections import Counter
 from traceback import format_exc
 import platform
+import logger
+
+log = logger.StdoutLogger()
 
 
 help_message = """
@@ -181,12 +184,12 @@ class ImgurAlbumDownloader:
 
             # Actually download the thing
             if os.path.isfile(path):
-                print ("Skipping, already exists.\n")
+                log.info("Skipping, already exists.")
             else:
                 try:
                     urllib.request.urlretrieve(image_url, path)
                 except:
-                    print ("Download failed.\n"+format_exc())
+                    log.info("Download failed.\n"+format_exc())
                     os.remove(path)
 
         # Run the complete callbacks:
