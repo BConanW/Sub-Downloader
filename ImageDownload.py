@@ -31,22 +31,22 @@ class ImgurDownloader:
         self.save_location = save_location
 
         if "imgur" in self.imgur_url:
-            log.info("URL is Imgur")
+            # log.info("URL is Imgur")
             if any (x in self.imgur_url for x in [".png", ".jpg", ".jpeg", ".gif", ".gifv"]):
-                log.info("Attempting to download single image")
+                # log.info("Attempting to download single image")
                 try:
                     imagename = self.imgur_url.rpartition("/")[2]
                     imagesavelocation = self.save_location + "/" + imagename
                     if not os.path.exists(imagesavelocation):
                         urllib.request.urlretrieve(self.imgur_url, imagesavelocation)
-                        log.info("Image '%s' successfully saved" % imagename)
+                        log.info("Download Complete: %s" % self.imgur_url)
                     else:
-                        log.info("Image '%s' already exists" % imagename)
+                        log.info("Image already exists: %s" % self.imgur_url)
                 except:
                     log.info("Unable to download from URL: %s" % self.imgur_url)
 
             else:
-                log.info("Attempting to download album")
+                # log.info("Attempting to download album")
                 try:
                     albumdownloader = imguralbum.ImgurAlbumDownloader(self.imgur_url)
                     if albumdownloader.num_images() == 1:
@@ -54,16 +54,16 @@ class ImgurDownloader:
                     else:
                         albumfoldername = self.imgur_url.rpartition("/")[2]
                         albumlocation = os.path.join(self.save_location, albumfoldername)
-                    log.info("%s images in album" % albumdownloader.num_images())
+                    # log.info("%s images in album" % albumdownloader.num_images())
                     albumdownloader.save_images(albumlocation)
-                    log.info("Album '%s' download complete" % albumfoldername)
+                    log.info("Album Download Complete: %s" % self.imgur_url)
 
                 except:
                     log.info("Failed to download album from URL: %s" % self.imgur_url)
 
 
         else:
-            log.error("URL is not Imgur")
+            log.error("URL is not Imgur: %s" % self.imgur_url)
 
 class RedditDownloader:
 
@@ -72,13 +72,13 @@ class RedditDownloader:
         self.save_location = save_location
 
         if "redd" in self.reddit_url:
-            log.info("URL is Reddit")
+            # log.info("URL is Reddit")
             imagename = self.reddit_url.rpartition("/")[2]
 
             if "reddituploads" in reddit_url:
-                log.info("Image hosted on reddituploads, name requires formatting")
+                # log.info("Image hosted on reddituploads, name requires formatting")
                 imagename = imagename.rpartition("?")[0] + ".jpg"
-                log.info("Formatting Complete")
+                # log.info("Formatting Complete")
             else:
                 pass
 
@@ -86,16 +86,16 @@ class RedditDownloader:
 
             try:
                 if os.path.isfile(imagesavelocation) is True:
-                    log.info("Image %s already exists" % imagename)
+                    log.info("Image already exists: %s" % self.reddit_url)
                 else:
-                    log.info("Attempting to download: %s" % self.reddit_url)
+                    # log.info("Attempting to download: %s" % self.reddit_url)
                     self.response = requests.get(self.reddit_url)
 
-                    log.info('Image will be saved with name: %s' % imagesavelocation)
+                    # log.info('Image will be saved with name: %s' % imagesavelocation)
                     self.f = open(imagesavelocation, 'wb')
-                    log.info('local image name created')
+                    # log.info('local image name created')
                     self.f.write(self.response.content)
-                    log.info('Download Complete')
+                    log.info("Download Complete: %s" % self.reddit_url)
                     self.f.close()
                     # log.info('connection closed')
             except:
@@ -119,24 +119,24 @@ class GfycatDownloader:
         soup = BeautifulSoup(html, 'html.parser')
         
         for link in soup.find_all(type="video/webm"):
-            log.info("getting link")
+            # log.info("getting link")
             directlink = link.get("src")
-            log.info("Direct Link: %s" % directlink)
+            # log.info("Direct Link: %s" % directlink)
 
         try:
             # log.info("Attempting to download %s using urllib" % self.image_url)
             imagename = directlink.rpartition("/")[2]
-            log.info("attempting to save with name: %s" % imagename)
+            # log.info("attempting to save with name: %s" % imagename)
             imagesavelocation = self.save_location + "/" + imagename
             # log.info("Attempting to download to %s" % imagesavelocation)
             if not os.path.exists(imagesavelocation):
                 # log.info(imagesavelocation)
                 urllib.request.urlretrieve(directlink, imagesavelocation)
-                log.info("Download complete")
+                log.info("Download complete: %s" % self.image_url)
             else:
-                log.info("Skipping. File already exists")
+                log.info("Skipping. File already exists: %s" % self.image_url)
         except:
-            log.info("Unable to download %s" % self.image_url)
+            log.info("Unable to download: %s" % self.image_url)
             pass
 
 
@@ -147,20 +147,20 @@ class GenericDownloader:
         self.image_url = image_url
         self.save_location = save_location
 
-        log.info("Attempting to Dowload: %s" % self.image_url)
+        # log.info("Attempting to Dowload: %s" % self.image_url)
         if any(x in self.image_url for x in [".png", ".jpg", ".jpeg", "gif", "gifv"]):
             try:
                 # log.info("Attempting to download %s using urllib" % self.image_url)
                 imagename = self.image_url.rpartition("/")[2]
-                log.info("attempting to save with name: %s" % imagename)
+                # log.info("attempting to save with name: %s" % imagename)
                 imagesavelocation = self.save_location + "/" + imagename
                 # log.info("Attempting to download to %s" % imagesavelocation)
                 if not os.path.exists(imagesavelocation):
                     # log.info(imagesavelocation)
                     urllib.request.urlretrieve(self.image_url, imagesavelocation)
-                    log.info("Download complete")
+                    log.info("Download complete: %s" % self.image_url)
                 else:
-                    log.info("Skipping. File already exists")
+                    log.info("Skipping. File already exists: %s" % self.image_url)
             except:
-                log.info("Unable to download %s" % self.image_url)
+                log.info("Unable to download: %s" % self.image_url)
                 pass

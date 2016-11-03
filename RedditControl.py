@@ -15,7 +15,7 @@ class RedditC(object):
         self.subr = sub
         self.slocation = slocation
 
-        log.info("sub is: %s" % self.subr)
+        log.info("-----sub is: %s-----" % self.subr)
         self.r = praw.Reddit(user_agent="bens_an_agent")
         # log.info(self.r)
 
@@ -38,7 +38,7 @@ class RedditC(object):
             os.mkdir(self.sub)
 
         self.topof = topof
-        log.info("Downloading top of the %s" % self.topof)
+        log.info("--Downloading top of the %s--" % self.topof)
         if self.topof is "day":
             self.toplist = self.subreddit.get_top_from_day()
         elif "week":
