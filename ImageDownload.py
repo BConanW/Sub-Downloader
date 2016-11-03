@@ -46,7 +46,6 @@ class ImgurDownloader:
                     log.info("Unable to download from URL: %s" % self.imgur_url)
 
             elif any (x in self.imgur_url for x in ["/a/", "/gallery/", "/topic/"]):
-                print(self.imgur_url)
                 # log.info("Attempting to download album")
                 try:
                     albumdownloader = imguralbum.ImgurAlbumDownloader(self.imgur_url)
