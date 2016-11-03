@@ -45,7 +45,8 @@ class ImgurDownloader:
                 except:
                     log.info("Unable to download from URL: %s" % self.imgur_url)
 
-            else:
+            elif any (x in self.imgur_url for x in ["/a/", "/gallery/", "/topic/"]):
+                print(self.imgur_url)
                 # log.info("Attempting to download album")
                 try:
                     albumdownloader = imguralbum.ImgurAlbumDownloader(self.imgur_url)
@@ -60,6 +61,27 @@ class ImgurDownloader:
 
                 except:
                     log.info("Failed to download album from URL: %s" % self.imgur_url)
+
+            else:
+                imgur_link = imgur_url.rpartition("//")[2]
+                directlink = "http://" + "i." + imgur_link + ".jpg"
+
+                try:
+                    # log.info("Attempting to download %s using urllib" % self.image_url)
+                    imagename = directlink.rpartition("/")[2]
+                    # log.info("attempting to save with name: %s" % imagename)
+                    imagesavelocation = self.save_location + "/" + imagename
+                    # log.info("Attempting to download to %s" % imagesavelocation)
+                    if not os.path.exists(imagesavelocation):
+                        # log.info(imagesavelocation)
+                        urllib.request.urlretrieve(directlink, imagesavelocation)
+                        log.info("Download complete: %s" % directlink)
+                    else:
+                        log.info("Skipping. File already exists: %s" % directlink)
+                except:
+                    log.info("Unable to download: %s" % directlink)
+                    pass
+
 
 
         else:
